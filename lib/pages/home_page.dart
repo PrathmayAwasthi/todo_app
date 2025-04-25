@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:todo_app/util/dialogbox.dart';
 import 'package:todo_app/util/todo_tile.dart';
 
@@ -10,6 +11,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final _myBox = Hive.openBox('todos');
   final _controller = TextEditingController();
   List toDoList = [];
 
@@ -18,6 +20,12 @@ class _HomePageState extends State<HomePage> {
       toDoList.add([_controller.text, false]);
       Navigator.pop(context);
       _controller.text = ""; // or _controller.clear()
+    });
+  }
+
+  void deleteTask(int ind) {
+    setState(() {
+      toDoList.removeAt(ind);
     });
   }
 
@@ -41,7 +49,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF222222),
+      backgroundColor: const Color(0xFF222222),
       appBar: AppBar(
         title: const Text("To-Do"),
         centerTitle: true,
@@ -54,15 +62,19 @@ class _HomePageState extends State<HomePage> {
           color: Colors.white,
         ),
       ),
-      body: ListView.builder(
-        itemCount: toDoList.length,
-        itemBuilder: (context, index) {
-          return ToDoTile(
-              onChanged: (value) => checkBoxChanged(value, index),
-              taskCompleted: toDoList[index][1],
-              taskName: toDoList[index][0]);
-        },
-      ),
+      body: toDoList.isNotEmpty
+          ? ListView.builder(
+              itemCount: toDoList.length,
+              itemBuilder: (context, index) {
+                return ToDoTile(
+                  onChanged: (value) => checkBoxChanged(value, index),
+                  taskCompleted: toDoList[index][1],
+                  taskName: toDoList[index][0],
+                  deleteTask: (context) => deleteTask(index),
+                );
+              },
+            )
+          : const Center(child: Text("You Currently have no To-Dos")),
     );
   }
 }
