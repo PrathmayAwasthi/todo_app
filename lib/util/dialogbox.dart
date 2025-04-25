@@ -20,6 +20,7 @@ class DialogBox extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               TextField(
+                autofocus: true,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Enter Task Name",

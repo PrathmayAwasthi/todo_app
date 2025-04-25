@@ -11,10 +11,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _controller = TextEditingController();
-  List toDoList = [
-    ["make your bed", false],
-    ["make your bed", false],
-  ];
+  List toDoList = [];
 
   void saveNewTask() {
     setState(() {
