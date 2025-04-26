@@ -13,15 +13,15 @@ class DialogBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        backgroundColor: Color(0xFF222222),
-        content: Container(
+        backgroundColor: const Color(0xFF222222),
+        content: SizedBox(
           height: 120,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               TextField(
                 autofocus: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Enter Task Name",
                 ),
